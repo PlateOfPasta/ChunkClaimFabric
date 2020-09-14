@@ -29,6 +29,8 @@ import com.github.plateofpasta.chunkclaimfabric.event.BlockSpreadCallback;
 import com.github.plateofpasta.chunkclaimfabric.event.DispenseCallback;
 import com.github.plateofpasta.chunkclaimfabric.event.SaplingGrowCallback;
 import com.github.plateofpasta.chunkclaimfabric.event.UseBedCallback;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.util.arborist.GrowthType;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;

@@ -26,6 +26,8 @@ import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimConfig;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.datastore.FlatFileDataStore;
 import com.github.plateofpasta.chunkclaimfabric.handler.*;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
@@ -77,7 +79,7 @@ public class ChunkClaimFabric implements DedicatedServerModInitializer {
    * @return true if modifiable by the player, else false.
    */
   public static boolean canPlayerModifyAtLocation(
-      ChunkClaimPlayer player, EdgestitchLocation location) {
+  ChunkClaimPlayer player, EdgestitchLocation location) {
     final PlayerData playerData =
         ChunkClaimFabric.getPlugin().getDataStore().getPlayerData(player.getName());
     final Chunk chunk =

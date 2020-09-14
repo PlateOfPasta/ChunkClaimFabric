@@ -23,7 +23,7 @@ package com.github.plateofpasta.chunkclaimfabric.command;
 
 import com.github.plateofpasta.chunkclaimfabric.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;

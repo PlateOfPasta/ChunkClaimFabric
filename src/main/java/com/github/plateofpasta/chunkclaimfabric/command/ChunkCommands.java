@@ -21,7 +21,7 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.command.admin.*;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

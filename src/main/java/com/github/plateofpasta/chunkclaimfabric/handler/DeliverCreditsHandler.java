@@ -21,8 +21,8 @@
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimPlayer;
-import com.github.plateofpasta.chunkclaimfabric.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import net.minecraft.server.MinecraftServer;

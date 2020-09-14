@@ -18,7 +18,7 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.player;
 
 import com.github.plateofpasta.edgestitch.permission.Permissible;
 import com.github.plateofpasta.edgestitch.player.EdgestitchPlayer;

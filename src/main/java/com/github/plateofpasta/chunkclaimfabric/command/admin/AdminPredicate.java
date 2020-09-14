@@ -20,7 +20,7 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command.admin;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.command.ServerCommandSource;
 
