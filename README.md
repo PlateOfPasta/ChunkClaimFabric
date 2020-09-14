@@ -54,6 +54,11 @@ Additional commands usable by players that have the `"mod"` permission.
   - Deletes ALL the target players chunk claims.
 - `/chunk ignore`
   - Allows the player to ignore chunk claims.
+  - Ignore permission cannot override:
+    - Tree spread between claims.
+    - Grass spread between claims.
+    - Fluid flow between claims
+    - Dispensing between claims.
 - `/chunk next <player name>`
   - Example: `/chunk next Player123`
   - Goes to the next chunk owned by the target player.
@@ -113,12 +118,3 @@ Default configuration:
 	"startCredits": 1.0
 }
 ```
-
-# Ignore Permission
-Players assigned the appropriate permission (`"mod"` Edgestitch permission) can ignore most claim
-rules.
-- Ignore permission cannot override:
-  - Tree spread between claims.
-  - Grass spread between claims.
-  - Fluid flow between claims
-  - Dispensing between claims.
