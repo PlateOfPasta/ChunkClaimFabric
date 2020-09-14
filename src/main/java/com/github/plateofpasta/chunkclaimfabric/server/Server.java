@@ -18,7 +18,7 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.server;
 
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.minecraft.server.MinecraftServer;

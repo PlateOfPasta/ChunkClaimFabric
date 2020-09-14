@@ -18,7 +18,7 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.server;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
