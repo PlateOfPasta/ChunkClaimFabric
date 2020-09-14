@@ -41,7 +41,7 @@ import net.minecraft.text.MutableText;
 public class Delete implements Command<ServerCommandSource> {
   public static final String NAMESPACE = "delete";
   public static final String ARG0_NAMESPACE = "player";
-  public static final String ARG1_NAMESPACE = "amount";
+  public static final String ARG1_NAMESPACE = "radius";
   private static final String NAMESPACE_PAST_TENSE = "deleted";
 
   /**

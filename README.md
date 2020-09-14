@@ -4,25 +4,65 @@ Minecraft servers. This software is a port to the Fabric mod loader.
 The original can be found here: https://github.com/boformer/ChunkClaim.
 
 # Commands
+## Normal Commands
+- `/chunk` 
+  - Base command that prints information about the current chunk.
+  - Normal information:
+    - If the chunk is public.
+    - Else,
+      - If the command is said by the claim owner:
+        - The list of builders, if any.
+      - Else, whether the player that said the command is a builder.
+- `/chunk abandon`
+  - Allows claim owners to revoke claim ownership of the current chunk and get a refund on the chunk
+  cost.
+- `/chunk claim`
+  - Explicitly claims the current chunk and removes the configured amount of credits.
+- `/chunk credits`
+  - Displays the current amount of credits a player has, the chunk claim price, and the mob spawn
+  price.
+- `/chunk help`
+  - Prints out usage prompts for all Chunk Claim commands.
+- `/chunk trust <player name>`
+  - Example: `/chunk trust Player123`
+  - Adds the target player to the list of trusted builders for all of your chunk claims. This
+  allows them to build in all the owner's chunk claims.
+- `/chunk untrust <player name>`
+  - Example: `/chunk trust Player123`
+  - Removes the target player from the list of trusted builders for all of your chunk claims. This
+  prevents them from building in all the owner's chunk claims.
+## Admin Commands
+Additional commands usable by players that have the `"mod"` permission.
+- `/chunk` 
+  - Base command that prints information about the current chunk.
+  - Additional mod information:
+    - Chunk ID used in datastore.
+    - Permanent (Based on modifiedBlocks?)
+    - Last login of chunk owner.
+    - List of trusted builders.
+    - Visualization of the chunk.
+- `/chunk bonus <player name> <amount>`
+  - Example: `/chunk bonus Player123 5`
+  - Gives the target player bonus credits for buying chunk claims or mob spawns.
+- `/chunk delete <player name> <radius>`
+  - Example: `/chunk delete Player123 5`
+  - Deletes the target player's chunk claims within the given radius.
+  - The radius can be unspecified, meaning delete the current chunk claim.
+  - Deletion performs the same operation as abandon.
+- `/chunk deleteall <player name>`
+  - Example: `/chunk deleteall Player123`
+  - Deletes ALL the target players chunk claims.
+- `/chunk ignore`
+  - Allows the player to ignore chunk claims.
+- `/chunk next <player name>`
+  - Example: `/chunk next Player123`
+  - Goes to the next chunk owned by the target player.
 
- - `/chunk` Base command that prints information about the current chunk.
-   - Normal information:
-     - If the chunk is public.
-     - Else,
-       - If the command is said by the claim owner:
-         - The list of builders, if any.
-       - Whether the player that said the command is a builder.
-   - Admin information:
-     - Chunk ID used in datastore.
-     - Permanent (Based on modifiedBlocks?)
-     - Last login of chunk owner.
-     - List of trusted builders.
-     - Visualization of the chunk.
-- `/chunk abandon` 
 
 # Configuration
-The configuration file must be in `<your game folder>/config/chunkclaimfabric.json5`. The file or 
-any missing field within it will be automatically generated with defaults if it does not exist. 
+The configuration file must be in `<your server game folder>/config/chunkclaimfabric.json5`. 
+The file or any missing field within it will be automatically generated with defaults if it does 
+not exist. 
 
 Default configuration:
 ```json5
@@ -75,55 +115,10 @@ Default configuration:
 ```
 
 # Ignore Permission
+Players assigned the appropriate permission (`"mod"` Edgestitch permission) can ignore most claim
+rules.
 - Ignore permission cannot override:
   - Tree spread between claims.
   - Grass spread between claims.
   - Fluid flow between claims
   - Dispensing between claims.
-
-# License Templates
-## Modified Files:
-```
-/*
-    ChunkClaim Plugin for Minecraft Bukkit Servers
-    Copyright (C) 2012 Felix Schmidt
-    Copyright (C) 2020 PlateOfPasta: Notice of modification for ChunkClaimFabric
-    
-    This file is part of ChunkClaim.
-    
-    ChunkClaim is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    ChunkClaim is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License
-    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
- */
-```
-## New Files
-```
-/*
-    ChunkClaim Plugin for Minecraft Fabric Servers
-    Copyright (C) 2020 PlateOfPasta
-    
-    This file is part of ChunkClaim and derivative work ChunkClaimFabric.
-    
-    ChunkClaim is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    
-    ChunkClaim is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License
-    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
- */
-```
