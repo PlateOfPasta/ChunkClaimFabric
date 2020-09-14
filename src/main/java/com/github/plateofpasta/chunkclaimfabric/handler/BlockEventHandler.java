@@ -23,6 +23,7 @@ package com.github.plateofpasta.chunkclaimfabric.handler;
 
 import com.github.plateofpasta.chunkclaimfabric.*;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
+import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.event.BlockSpreadCallback;
 import com.github.plateofpasta.chunkclaimfabric.event.DispenseCallback;

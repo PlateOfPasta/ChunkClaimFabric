@@ -18,8 +18,9 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.config;
 
+import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.util.TagBuilderHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
