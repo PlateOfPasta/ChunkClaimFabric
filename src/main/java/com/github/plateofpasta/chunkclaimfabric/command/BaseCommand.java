@@ -21,13 +21,13 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command;
 
-import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;

@@ -21,10 +21,10 @@
 
 package com.github.plateofpasta.chunkclaimfabric.visual;
 
-import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.minecraft.block.BlockState;
@@ -252,25 +252,17 @@ public class Visualization {
 
     final Vec3d[] accentVisualCoords = {
       // Bottom left corner.
-      new Vec3d(smallX + 1, height, smallZ),
-      new Vec3d(smallX + 2, height, smallZ),
-      new Vec3d(smallX, height, smallZ + 1),
-      new Vec3d(smallX, height, smallZ + 2),
+      new Vec3d(smallX + 1, height, smallZ), new Vec3d(smallX + 2, height, smallZ),
+      new Vec3d(smallX, height, smallZ + 1), new Vec3d(smallX, height, smallZ + 2),
       // Bottom right corner
-      new Vec3d(bigX - 1, height, smallZ),
-      new Vec3d(bigX - 2, height, smallZ),
-      new Vec3d(bigX, height, smallZ + 1),
-      new Vec3d(bigX, height, smallZ + 2),
+      new Vec3d(bigX - 1, height, smallZ), new Vec3d(bigX - 2, height, smallZ),
+      new Vec3d(bigX, height, smallZ + 1), new Vec3d(bigX, height, smallZ + 2),
       // Top right corner.
-      new Vec3d(bigX - 1, height, bigZ),
-      new Vec3d(bigX - 2, height, bigZ),
-      new Vec3d(bigX, height, bigZ - 1),
-      new Vec3d(bigX, height, bigZ - 2),
+      new Vec3d(bigX - 1, height, bigZ), new Vec3d(bigX - 2, height, bigZ),
+      new Vec3d(bigX, height, bigZ - 1), new Vec3d(bigX, height, bigZ - 2),
       // Top left corner.
-      new Vec3d(smallX + 1, height, bigZ),
-      new Vec3d(smallX + 2, height, bigZ),
-      new Vec3d(smallX, height, bigZ - 1),
-      new Vec3d(smallX, height, bigZ - 2),
+      new Vec3d(smallX + 1, height, bigZ), new Vec3d(smallX + 2, height, bigZ),
+      new Vec3d(smallX, height, bigZ - 1), new Vec3d(smallX, height, bigZ - 2),
     };
 
     VisualizationMaterial cornerMaterial = vtype.getCornerMaterial();

@@ -25,6 +25,7 @@ import net.minecraft.block.BlockState;
 /** Abstracts the exact implementation of ChunkClaim visualization material. */
 public class VisualizationMaterial {
   protected final BlockState visualBlockState;
+
   /**
    * Constructor implementation for worldedit-core block types.
    *

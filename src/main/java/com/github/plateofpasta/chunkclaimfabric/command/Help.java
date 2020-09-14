@@ -21,8 +21,8 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command;
 
-import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

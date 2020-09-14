@@ -82,7 +82,7 @@ public class ChunkClaimFabric implements DedicatedServerModInitializer {
    * @return true if modifiable by the player, else false.
    */
   public static boolean canPlayerModifyAtLocation(
-  ChunkClaimPlayer player, EdgestitchLocation location) {
+      ChunkClaimPlayer player, EdgestitchLocation location) {
     final PlayerData playerData =
         ChunkClaimFabric.getPlugin().getDataStore().getPlayerData(player.getName());
     final Chunk chunk =

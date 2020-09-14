@@ -21,7 +21,7 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command.admin;
 
-import com.github.plateofpasta.chunkclaimfabric.*;
+import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.command.ChunkCommands;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;

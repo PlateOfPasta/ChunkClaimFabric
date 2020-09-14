@@ -36,8 +36,8 @@ import java.util.Set;
  * the blocks have been generated in the game world. Thus, it is recommended to iterate over the
  * collection of block positions for the logs/leaves and utilize the interface {@link
  * TreeFeature#setBlockStateWithoutUpdatingNeighbors} to edit the blocks as necessary. \n Note: the
- * com.github.plateofpasta.chunkclaimfabric.util.arborist.GrowthType#WORLD_GEN} growth type is excluded from
- * this event.
+ * com.github.plateofpasta.chunkclaimfabric.util.arborist.GrowthType#WORLD_GEN} growth type is
+ * excluded from this event.
  *
  * @see MixinTreeFeature
  */

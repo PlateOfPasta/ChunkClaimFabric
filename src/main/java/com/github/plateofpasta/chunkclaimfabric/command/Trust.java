@@ -21,12 +21,12 @@
 
 package com.github.plateofpasta.chunkclaimfabric.command;
 
-import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
-import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

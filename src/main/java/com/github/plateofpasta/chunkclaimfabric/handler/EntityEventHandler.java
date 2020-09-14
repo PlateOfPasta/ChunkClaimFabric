@@ -21,13 +21,13 @@
 
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
-import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
-import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
+import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
+import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.util.AlwaysMissHitResult;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.event.ProjectileHitCallback;
 import com.github.plateofpasta.edgestitch.event.ServerWorldEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
@@ -76,13 +76,13 @@ public class EntityEventHandler {
    * When a player interacts with (right-clicks) an entity. Satisfies the Fabric event API
    * `UseEntityCallback`.
    *
-   * @see net.fabricmc.fabric.api.event.player.UseEntityCallback
    * @param playerEntity Player performing the action.
    * @param world World the action is occurring in.
    * @param hand Which hand is interacting. Ignored.
    * @param entity Target entity.
    * @param hitResult Hit result on the entity. Ignored.
    * @return Action result for this callback, whether we want to cancel the interaction or not.
+   * @see net.fabricmc.fabric.api.event.player.UseEntityCallback
    */
   public ActionResult onPlayerInteractEntity(
       PlayerEntity playerEntity,

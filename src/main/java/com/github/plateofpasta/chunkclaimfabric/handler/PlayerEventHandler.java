@@ -23,8 +23,8 @@ package com.github.plateofpasta.chunkclaimfabric.handler;
 
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
-import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
+import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.edgestitch.event.ServerPlayerEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.minecraft.entity.ItemEntity;

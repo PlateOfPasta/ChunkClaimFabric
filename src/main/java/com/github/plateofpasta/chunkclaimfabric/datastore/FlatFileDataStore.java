@@ -21,10 +21,10 @@
 
 package com.github.plateofpasta.chunkclaimfabric.datastore;
 
-import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.chunkclaimfabric.world.ChunkWorld;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
+import com.github.plateofpasta.chunkclaimfabric.world.ChunkWorld;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
