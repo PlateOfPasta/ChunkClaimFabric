@@ -34,6 +34,7 @@ import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.util.arborist.GrowthType;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.event.FluidFlowCallback;
 import com.github.plateofpasta.edgestitch.event.PistonEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;

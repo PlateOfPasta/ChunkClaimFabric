@@ -30,6 +30,7 @@ import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.util.TimeDateUtil;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;

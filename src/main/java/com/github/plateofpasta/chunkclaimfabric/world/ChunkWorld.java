@@ -19,7 +19,7 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.world;
 
 import com.google.common.collect.HashBasedTable;
 
@@ -60,7 +60,7 @@ public class ChunkWorld {
   /**
    * Removes the chunk from the datastore.
    *
-   * @param newChunk Chunk to add to the datastore.
+   * @param chunk Chunk to add to the datastore.
    */
   public void removeChunk(Chunk chunk) {
     chunkTable.remove(chunk.getCoordX(), chunk.getCoordZ());

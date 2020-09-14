@@ -19,8 +19,9 @@
    along with ChunkClaim.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.plateofpasta.chunkclaimfabric;
+package com.github.plateofpasta.chunkclaimfabric.world;
 
+import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;

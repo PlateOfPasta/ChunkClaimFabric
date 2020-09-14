@@ -21,7 +21,7 @@
 
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
-import com.github.plateofpasta.chunkclaimfabric.Chunk;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;

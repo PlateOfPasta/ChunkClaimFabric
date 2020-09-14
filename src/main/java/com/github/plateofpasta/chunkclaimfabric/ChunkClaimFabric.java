@@ -28,6 +28,7 @@ import com.github.plateofpasta.chunkclaimfabric.datastore.FlatFileDataStore;
 import com.github.plateofpasta.chunkclaimfabric.handler.*;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
