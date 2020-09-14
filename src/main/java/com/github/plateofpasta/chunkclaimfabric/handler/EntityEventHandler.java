@@ -21,17 +21,16 @@
 
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.util.AlwaysMissHitResult;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.event.ProjectileHitCallback;
 import com.github.plateofpasta.edgestitch.event.ServerWorldEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
-import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.Entity;
@@ -95,7 +94,7 @@ public class EntityEventHandler {
       return ActionResult.PASS;
     }
 
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
 
@@ -119,7 +118,7 @@ public class EntityEventHandler {
    * @param entity Entity that might be an experience orb.
    */
   public TypedActionResult<Boolean> onExpOrbSpawn(World world, Entity entity) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return TypedActionResult.pass(null); // Return value doesn't matter on PASS.
     }
 
@@ -145,7 +144,7 @@ public class EntityEventHandler {
     if (hitResult instanceof EntityHitResult) {
       EntityHitResult entityHitResult = (EntityHitResult) hitResult;
       World world = entityHitResult.getEntity().getEntityWorld();
-      if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+      if (!ChunkClaimUtil.isConfiguredWorld(world)) {
         return TypedActionResult.pass(null); // Return value doesn't matter on PASS.
       }
 
@@ -160,7 +159,7 @@ public class EntityEventHandler {
         ChunkClaimPlayer player = new ChunkClaimPlayer((PlayerEntity) projectileEntity.getOwner());
         EdgestitchLocation location =
             new EdgestitchLocation(world, entityHitResult.getEntity().getBlockPos());
-        if (ChunkClaimFabric.canPlayerModifyAtLocation(player, location)) {
+        if (player.canPlayerModifyAtLocation(location)) {
           return TypedActionResult.pass(null); // Return value doesn't matter on PASS.
         } else {
           player.sendMessage(ChunkClaimPrompt.get("prompt.chunkclaim.entity_protected"));
@@ -185,8 +184,7 @@ public class EntityEventHandler {
     // Any thrown entity in the checked list is always removed in configured worlds, regardless of
     // claims.
     if (ChunkClaimTags.CHECKED_THROWN_ENTITIES.contains(thrownEntity.getType())
-        && ChunkClaimFabric.isConfiguredWorld(
-            EdgestitchWorld.Companion.getName(thrownEntity.getEntityWorld()))) {
+        && ChunkClaimUtil.isConfiguredWorld(thrownEntity.getEntityWorld())) {
       return TypedActionResult.fail(null); // Return value doesn't matter on FAIL.
     } else {
       return TypedActionResult.pass(null); // Return value doesn't matter on PASS.

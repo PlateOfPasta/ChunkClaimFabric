@@ -23,6 +23,7 @@ package com.github.plateofpasta.chunkclaimfabric.handler;
 
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.server.MinecraftServer;
@@ -61,7 +62,7 @@ public class WorldEventHandler {
    */
   private void onWorldLoad(MinecraftServer server, ServerWorld world) {
     String worldName = EdgestitchWorld.Companion.getName(world);
-    if (ChunkClaimFabric.isConfiguredWorld(worldName)) {
+    if (ChunkClaimUtil.isConfiguredWorld(world)) {
       try {
         this.dataStore.loadWorldData(worldName);
         int claimedChunks = this.dataStore.getWorlds().get(worldName).chunkTable.size();
@@ -83,7 +84,7 @@ public class WorldEventHandler {
    */
   private void onWorldClose(MinecraftServer server, ServerWorld world) {
     String worldName = EdgestitchWorld.Companion.getName(world);
-    if (ChunkClaimFabric.isConfiguredWorld(worldName)) {
+    if (ChunkClaimUtil.isConfiguredWorld(world)) {
       this.dataStore.unloadWorldData(worldName);
       System.gc();
     }

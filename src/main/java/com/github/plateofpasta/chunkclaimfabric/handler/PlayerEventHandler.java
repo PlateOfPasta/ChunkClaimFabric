@@ -21,12 +21,11 @@
 
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.edgestitch.event.ServerPlayerEvents;
-import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -95,8 +94,7 @@ public class PlayerEventHandler {
    *     value which should not spawn the item entity in the world.
    */
   public TypedActionResult<ItemEntity> onPlayerDrop(PlayerEntity playerEntity, ItemStack stack) {
-    if (!ChunkClaimFabric.isConfiguredWorld(
-        EdgestitchWorld.Companion.getName(playerEntity.getEntityWorld()))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(playerEntity.getEntityWorld())) {
       return TypedActionResult.pass(null);
     }
 

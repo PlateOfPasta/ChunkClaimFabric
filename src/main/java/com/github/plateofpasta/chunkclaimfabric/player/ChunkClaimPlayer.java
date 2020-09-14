@@ -20,8 +20,11 @@
 
 package com.github.plateofpasta.chunkclaimfabric.player;
 
+import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
+import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.permission.Permissible;
 import com.github.plateofpasta.edgestitch.player.EdgestitchPlayer;
+import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -29,6 +32,20 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class ChunkClaimPlayer extends EdgestitchPlayer {
   public ChunkClaimPlayer(PlayerEntity player) {
     super(player);
+  }
+
+  /**
+   * Wrapper for looking up player data in the datastore and checking the player's ignore
+   * permission.
+   *
+   * @param playerName Player name to check.
+   * @return {@code true} if the player can ignore, else false.
+   */
+  public static boolean hasIgnorePermission(String playerName) {
+    return ChunkClaimFabric.getPlugin()
+        .getDataStore()
+        .getPlayerData(playerName)
+        .canIgnoreChunkClaims();
   }
 
   /**
@@ -60,5 +77,22 @@ public class ChunkClaimPlayer extends EdgestitchPlayer {
    */
   public boolean hasModPermission() {
     return this.hasPermission("chunkclaimfabric.mod");
+  }
+
+  /**
+   * Helper function for checking if a player can modify the block at the location per claim rules.
+   * Uses the singleton instance of the plugin.
+   *
+   * @param player Player modifying block.
+   * @param location Location being modified.
+   * @return true if modifiable by the player, else false.
+   */
+  public boolean canPlayerModifyAtLocation(EdgestitchLocation location) {
+    final PlayerData playerData =
+        ChunkClaimFabric.getPlugin().getDataStore().getPlayerData(this.getName());
+    final Chunk chunk =
+        ChunkClaimFabric.getPlugin().getDataStore().getChunkAt(location, playerData.getLastChunk());
+    return (null != chunk)
+        && ((playerData.canIgnoreChunkClaims()) || (chunk.canModify(this.getName())));
   }
 }

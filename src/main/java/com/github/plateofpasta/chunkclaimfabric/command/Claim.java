@@ -26,6 +26,7 @@ import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
 import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
@@ -54,7 +55,7 @@ public class Claim implements Command<ServerCommandSource> {
     ChunkClaimPlayer player = new ChunkClaimPlayer(context.getSource().getPlayer());
     EdgestitchLocation location = player.getLocation();
 
-    if (!ChunkClaimFabric.isConfiguredWorld(location.getWorld().getName())) {
+    if (!ChunkClaimUtil.isConfiguredWorld(location.getWorld())) {
       return 0;
     }
 

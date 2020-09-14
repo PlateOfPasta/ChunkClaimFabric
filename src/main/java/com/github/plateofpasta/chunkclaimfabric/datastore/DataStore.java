@@ -26,6 +26,7 @@ import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.chunkclaimfabric.world.ChunkWorld;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
+import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 
 import java.io.File;
 import java.util.*;
@@ -135,7 +136,6 @@ public abstract class DataStore {
    * @param n Number of chunks to randomly check for clean up.
    */
   public void cleanUp(int n) {
-
     if (this.chunks.isEmpty()) {
       return;
     }
@@ -236,7 +236,11 @@ public abstract class DataStore {
       PlayerData targetPlayerData = this.getPlayerData(chunk.getOwnerName());
       targetPlayerData.addCredits(CHUNK_PRICE);
       this.savePlayerData(chunk.getOwnerName(), targetPlayerData);
-      ChunkClaimFabric.getPlugin().regenerateChunk(chunk);
+      if (ChunkClaimFabric.getClaimConfig().getRegenerateChunk()) {
+        EdgestitchWorld world =
+            ChunkClaimFabric.getPlugin().getServer().getWorld(chunk.getWorldName());
+        world.regenerateChunk(chunk.getChunkPos());
+      }
       return true;
     }
     return false;

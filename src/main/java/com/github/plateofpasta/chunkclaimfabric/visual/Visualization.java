@@ -74,14 +74,12 @@ public class Visualization {
 
     playerData.setCurrentVisualization(visualization);
     // Create a task to send the player the visualization in about half a second.
-    ChunkClaimFabric.getPlugin()
-        .getScheduler()
+    ChunkClaimFabric.getScheduler()
         .queue(
             minecraftServer -> visualizationApplicationTask(player, playerData, visualization), 10);
 
     // Clear the visualization after 20 seconds.
-    ChunkClaimFabric.getPlugin()
-        .getScheduler()
+    ChunkClaimFabric.getScheduler()
         .queue(minecraftServer -> visualizationClearTask(player, playerData, visualization), 400);
   }
 

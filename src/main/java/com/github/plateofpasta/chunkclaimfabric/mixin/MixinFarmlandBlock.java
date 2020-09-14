@@ -20,8 +20,7 @@
 
 package com.github.plateofpasta.chunkclaimfabric.mixin;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
-import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +47,7 @@ public abstract class MixinFarmlandBlock {
   private static void preventSetToDirt(
       BlockState state, World world, BlockPos pos, CallbackInfo info) {
     // Force early return of setToDirt if this a configured world.
-    if (ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (ChunkClaimUtil.isConfiguredWorld(world)) {
       info.cancel();
     }
   }

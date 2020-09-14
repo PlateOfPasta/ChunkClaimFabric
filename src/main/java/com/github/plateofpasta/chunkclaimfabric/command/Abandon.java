@@ -26,6 +26,7 @@ import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
 import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
@@ -67,7 +68,7 @@ public class Abandon implements Command<ServerCommandSource> {
     if (radius > 0) {
       int chunksDeleted =
           dataStore.deleteChunks(
-              ChunkClaimFabric.getPlugin().getChunksInRadius(location, player.getName(), radius));
+              ChunkClaimUtil.getChunksInRadius(location, player.getName(), radius));
       player.sendMessage(
           ChunkClaimPrompt.joinText(
               " ",

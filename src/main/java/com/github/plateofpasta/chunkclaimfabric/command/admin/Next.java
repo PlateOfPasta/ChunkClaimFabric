@@ -28,6 +28,7 @@ import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
 import com.github.plateofpasta.chunkclaimfabric.server.Scheduler;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.chunkclaimfabric.util.TimeDateUtil;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
@@ -61,7 +62,7 @@ public class Next implements Command<ServerCommandSource> {
     final ChunkClaimPlayer player = new ChunkClaimPlayer(context.getSource().getPlayer());
     final EdgestitchLocation location = player.getLocation();
 
-    if (!ChunkClaimFabric.isConfiguredWorld(location.getWorld().getName())) {
+    if (!ChunkClaimUtil.isConfiguredWorld(location.getWorld())) {
       player.sendMessages(ChunkClaimPrompt.get("prompt.chunkclaim.not_configured_world"));
       return 0;
     }
@@ -134,8 +135,7 @@ public class Next implements Command<ServerCommandSource> {
      */
     private NextCache(DataStore dataStore) {
       this.dataStore = dataStore;
-      ChunkClaimFabric.getPlugin()
-          .getScheduler()
+      ChunkClaimFabric.getScheduler()
           .repeating(this::cleanup, NextCache.CLEANUP_TICKS, NextCache.CLEANUP_TICKS);
     }
 

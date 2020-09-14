@@ -377,6 +377,12 @@ public class Chunk {
         && (locationWorldName.equals(this.worldName));
   }
 
+  /** Writes this chunk to the plugin's datastore. */
+  public void writeChunkToStorage() {
+    // todo maybe make writeChunkToStorage private and use AddChunk?
+    ChunkClaimFabric.getPlugin().getDataStore().writeChunkToStorage(this);
+  }
+
   /**
    * Modify (increment by one) the chunk's number of modified blocks so we can determine if this
    * chunk is "built." Note: this function performs datastore operations until the modification
@@ -385,20 +391,20 @@ public class Chunk {
   public void modify() {
     if (!this.hasMetMinimum()) {
       this.modifiedBlocks++;
-      ChunkClaimFabric.getPlugin().writeChunkToStorage(this);
+      this.writeChunkToStorage();
     }
   }
 
   /** Marks the chunk for deletion. */
   public void markForDelete() {
     this.markedForDelete = true;
-    ChunkClaimFabric.getPlugin().writeChunkToStorage(this);
+    this.writeChunkToStorage();
   }
 
   /** Unmarks the chunk for deletion. */
   public void unmarkForDelete() {
     this.markedForDelete = false;
-    ChunkClaimFabric.getPlugin().writeChunkToStorage(this);
+    this.writeChunkToStorage();
   }
 
   /**

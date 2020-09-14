@@ -31,6 +31,7 @@ import com.github.plateofpasta.chunkclaimfabric.event.SaplingGrowCallback;
 import com.github.plateofpasta.chunkclaimfabric.event.UseBedCallback;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
 import com.github.plateofpasta.chunkclaimfabric.player.PlayerData;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.chunkclaimfabric.util.arborist.GrowthType;
 import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
@@ -38,7 +39,6 @@ import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.event.FluidFlowCallback;
 import com.github.plateofpasta.edgestitch.event.PistonEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
-import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
@@ -146,7 +146,7 @@ public class BlockEventHandler {
       Direction facingDir,
       PistonHandler pistonHandler,
       boolean isExtending) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
 
@@ -155,7 +155,7 @@ public class BlockEventHandler {
     if (null == pistonChunk) {
       return ActionResult.FAIL;
     }
-    if (ChunkClaimFabric.getPlugin().hasIgnorePermission(pistonChunk.getOwnerName())) {
+    if (ChunkClaimPlayer.hasIgnorePermission(pistonChunk.getOwnerName())) {
       return ActionResult.PASS;
     }
     final ChunkPos neighborChunkPos = pistonChunk.offset(facingDir);
@@ -198,7 +198,7 @@ public class BlockEventHandler {
    * @param blockPos Position of the block in the world.
    */
   private ActionResult onUseBedBlock(PlayerEntity playerEntity, World world, BlockPos blockPos) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
     ChunkClaimPlayer player = new ChunkClaimPlayer(playerEntity);
@@ -228,7 +228,7 @@ public class BlockEventHandler {
   private ActionResult onItemUseBlock(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult blockHitResult) {
     final ItemStack itemStack = playerEntity.getStackInHand(hand);
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
 
@@ -371,7 +371,7 @@ public class BlockEventHandler {
    */
   public ActionResult onBlockBreak(
       PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction direction) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
     final ChunkClaimPlayer player = new ChunkClaimPlayer(playerEntity);
@@ -392,7 +392,7 @@ public class BlockEventHandler {
   public ActionResult onBlockPlace(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult hitResult) {
 
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
     final ChunkClaimPlayer player = new ChunkClaimPlayer(playerEntity);
@@ -413,7 +413,7 @@ public class BlockEventHandler {
    */
   public ActionResult onSpawnEggUse(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult hitResult) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
 
@@ -500,7 +500,7 @@ public class BlockEventHandler {
    * @return PASS if the movement is allowed, else FAIL.
    */
   public ActionResult onFromTo(World world, BlockPos fromBlockPos, BlockPos toBlockPos) {
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
     // From where?
@@ -564,7 +564,7 @@ public class BlockEventHandler {
       Set<BlockPos> leavesPositions,
       Set<BlockPos> decoratorPositions) {
 
-    if (!ChunkClaimFabric.isConfiguredWorld(EdgestitchWorld.Companion.getName(world))) {
+    if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
 

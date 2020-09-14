@@ -20,10 +20,9 @@
 
 package com.github.plateofpasta.chunkclaimfabric.mixin;
 
-import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.player.ChunkClaimPlayer;
+import com.github.plateofpasta.chunkclaimfabric.util.ChunkClaimUtil;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
-import com.github.plateofpasta.edgestitch.world.EdgestitchWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
@@ -47,8 +46,7 @@ public abstract class MixinPotionEntity {
   @Inject(at = @At("HEAD"), method = "extinguishFire", cancellable = true)
   private void preventExtinguishFire(BlockPos blockPos, Direction direction, CallbackInfo info) {
     PotionEntity potionEntity = (PotionEntity) (Object) this;
-    if (ChunkClaimFabric.isConfiguredWorld(
-        EdgestitchWorld.Companion.getName(potionEntity.getEntityWorld()))) {
+    if (ChunkClaimUtil.isConfiguredWorld(potionEntity.getEntityWorld())) {
       Entity entityThrower = potionEntity.getOwner();
       boolean shouldCancel;
       if (!(entityThrower instanceof PlayerEntity)) {
@@ -57,7 +55,7 @@ public abstract class MixinPotionEntity {
         ChunkClaimPlayer player = new ChunkClaimPlayer((PlayerEntity) entityThrower);
         EdgestitchLocation location =
             new EdgestitchLocation(potionEntity.getEntityWorld(), blockPos);
-        shouldCancel = !ChunkClaimFabric.canPlayerModifyAtLocation(player, location);
+        shouldCancel = !player.canPlayerModifyAtLocation(location);
       }
       if (shouldCancel) {
         info.cancel();
