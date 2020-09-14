@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "com.github.plateofpasta.chunkclaimfabric.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "server": [
+    "MixinBedBlock",
+    "MixinDispenserBlock",
+    "MixinFarmlandBlock",
+    "MixinKillWatchDog",
+    "MixinPotionEntity",
+    "MixinSpreadableBlock",
+    "arborist.MixinLargeSaplingGenerator",
+    "arborist.MixinSaplingBlock",
+    "arborist.MixinSaplingGenerator",
+    "arborist.MixinTreeFeature",
+    "arborist.MixinTreeFeatureConfig"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

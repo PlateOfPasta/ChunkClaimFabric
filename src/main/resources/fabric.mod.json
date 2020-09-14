@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "chunkclaimfabric",
+  "version": "${version}",
+  "name": "Chunk Claim Fabric",
+  "description": "Fabric port of Chunk Claim",
+  "authors": [
+    "PlateOfPasta"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PlateOfPasta/ChunkClaimFabric/blob/master/README.md",
+    "sources": "https://github.com/PlateOfPasta/ChunkClaimFabric"
+  },
+  "license": "GPLv3",
+  "icon": "assets/chunkclaimfabric/placeholder.png",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric"
+    ]
+  },
+  "mixins": [
+    "chunkclaimfabric.mixin.json"
+  ],
+  "depends": {
+    "fabricloader": "0.9.1+build.205",
+    "fabric": "0.18.0+build.397-1.16",
+    "minecraft": "1.16.2"
+  },
+  "custom": {
+    "edgestitch-permissions": {
+      "mod": {
+        "description": "Gives a player moderator status for the ChunkClaim mod. This means they can bypass claim rules.",
+        "required_assign_op": 4
+      },
+      "claim": {
+        "description": "Gives a player chunk claim permissions.",
+        "required_assign_op": 2
+      }
+    }
+  }
+}
