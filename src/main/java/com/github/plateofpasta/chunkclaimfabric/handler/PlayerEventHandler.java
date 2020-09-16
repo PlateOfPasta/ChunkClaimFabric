@@ -63,7 +63,7 @@ public class PlayerEventHandler {
    *
    * @param playerName Player.
    */
-  void onPlayerJoin(String playerName) {
+  private void onPlayerJoin(String playerName) {
     PlayerData playerData = this.dataStore.getPlayerData(playerName);
     playerData.setLastLogin(new Date());
     if (null == playerData.getFirstJoin()) {
@@ -77,7 +77,7 @@ public class PlayerEventHandler {
    *
    * @param playerName Player.
    */
-  void onPlayerQuit(String playerName) {
+  private void onPlayerQuit(String playerName) {
     PlayerData playerData = this.dataStore.getPlayerData(playerName);
     // Make sure his data is all saved.
     this.dataStore.savePlayerData(playerName, playerData);
@@ -93,7 +93,7 @@ public class PlayerEventHandler {
    * @return Typed action result PASS if the item is allowed to be dropped, else FAIL with a null
    *     value which should not spawn the item entity in the world.
    */
-  public TypedActionResult<ItemEntity> onPlayerDrop(PlayerEntity playerEntity, ItemStack stack) {
+  private TypedActionResult<ItemEntity> onPlayerDrop(PlayerEntity playerEntity, ItemStack stack) {
     if (!ChunkClaimUtil.isConfiguredWorld(playerEntity.getEntityWorld())) {
       return TypedActionResult.pass(null);
     }

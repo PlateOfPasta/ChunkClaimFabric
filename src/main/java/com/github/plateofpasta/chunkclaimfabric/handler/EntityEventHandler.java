@@ -83,7 +83,7 @@ public class EntityEventHandler {
    * @return Action result for this callback, whether we want to cancel the interaction or not.
    * @see net.fabricmc.fabric.api.event.player.UseEntityCallback
    */
-  public ActionResult onPlayerInteractEntity(
+  private ActionResult onPlayerInteractEntity(
       PlayerEntity playerEntity,
       World world,
       Hand hand,
@@ -117,7 +117,7 @@ public class EntityEventHandler {
    * @param world World the experience orb is being spawned in.
    * @param entity Entity that might be an experience orb.
    */
-  public TypedActionResult<Boolean> onExpOrbSpawn(World world, Entity entity) {
+  private TypedActionResult<Boolean> onExpOrbSpawn(World world, Entity entity) {
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return TypedActionResult.pass(null); // Return value doesn't matter on PASS.
     }
@@ -139,7 +139,7 @@ public class EntityEventHandler {
    * @param hitResult Hit result of the entity.
    * @return PASS if hit result should be unmodified, else FAIL with a modified HitResult.
    */
-  public TypedActionResult<HitResult> onProjectileHit(
+  private TypedActionResult<HitResult> onProjectileHit(
       ProjectileEntity projectileEntity, HitResult hitResult) {
     if (hitResult instanceof EntityHitResult) {
       EntityHitResult entityHitResult = (EntityHitResult) hitResult;
@@ -179,7 +179,7 @@ public class EntityEventHandler {
    * @return PASS if this is not a chunk claim world, else FAIL to always remove the thrown entity
    *     if it is in the list of checked thrown entities.
    */
-  public TypedActionResult<HitResult> onThrownCollision(
+  private TypedActionResult<HitResult> onThrownCollision(
       ThrownEntity thrownEntity, HitResult hitResult) {
     // Any thrown entity in the checked list is always removed in configured worlds, regardless of
     // claims.
