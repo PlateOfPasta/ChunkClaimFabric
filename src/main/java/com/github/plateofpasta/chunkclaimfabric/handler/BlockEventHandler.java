@@ -37,12 +37,14 @@ import com.github.plateofpasta.chunkclaimfabric.visual.Visualization;
 import com.github.plateofpasta.chunkclaimfabric.visual.VisualizationType;
 import com.github.plateofpasta.chunkclaimfabric.world.Chunk;
 import com.github.plateofpasta.edgestitch.event.FluidFlowCallback;
+import com.github.plateofpasta.edgestitch.event.HopperInsertCallback;
 import com.github.plateofpasta.edgestitch.event.PistonEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.block.piston.PistonHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -93,6 +95,7 @@ public class BlockEventHandler {
     BlockSpreadCallback.EVENT.register(handler::onSpreadFromTo);
     FluidFlowCallback.EVENT.register(handler::onFluidFromTo);
     DispenseCallback.EVENT.register(handler::onDispenseFromTo);
+    HopperInsertCallback.EVENT.register(handler::onHopperInsert);
     SaplingGrowCallback.EVENT.register(handler::onTreeGrow);
     PistonEvents.PISTON_EXTEND.register(handler::onPistonExtend);
     PistonEvents.PISTON_RETRACT.register(handler::onPistonRetract);
@@ -108,7 +111,7 @@ public class BlockEventHandler {
    * @return PASS if movement calculation should proceed, else FAIL if the movement calculation
    *     should return not occur.
    */
-  public ActionResult onPistonExtend(
+  private ActionResult onPistonExtend(
       World world, BlockPos pistonPos, Direction facingDir, PistonHandler pistonHandler) {
     return onPistonMove(world, pistonPos, facingDir, pistonHandler, true);
   }
@@ -123,7 +126,7 @@ public class BlockEventHandler {
    * @return PASS if movement calculation should proceed, else FAIL if the movement calculation
    *     should return not occur.
    */
-  public ActionResult onPistonRetract(
+  private ActionResult onPistonRetract(
       World world, BlockPos pistonPos, Direction facingDir, PistonHandler pistonHandler) {
     return onPistonMove(world, pistonPos, facingDir, pistonHandler, false);
   }
@@ -140,7 +143,7 @@ public class BlockEventHandler {
    *     should return a "don't move" value because at least one of the movable blocks is in a chunk
    *     claim other than the piston's chunk.
    */
-  public ActionResult onPistonMove(
+  private ActionResult onPistonMove(
       World world,
       BlockPos pistonPos,
       Direction facingDir,
@@ -369,7 +372,7 @@ public class BlockEventHandler {
    * @param direction Which face of the block is being attacked (broken).
    * @return PASS if the action is allowed, else FAIL.
    */
-  public ActionResult onBlockBreak(
+  private ActionResult onBlockBreak(
       PlayerEntity playerEntity, World world, Hand hand, BlockPos blockPos, Direction direction) {
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
@@ -389,7 +392,7 @@ public class BlockEventHandler {
    * @param hitResult Hit result of the action.
    * @return PASS if the action is allowed, else FAIL.
    */
-  public ActionResult onBlockPlace(
+  private ActionResult onBlockPlace(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult hitResult) {
 
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
@@ -411,7 +414,7 @@ public class BlockEventHandler {
    * @param hitResult Hit result of the action.
    * @return PASS if the action is allowed, else FAIL.
    */
-  public ActionResult onSpawnEggUse(
+  private ActionResult onSpawnEggUse(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult hitResult) {
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
@@ -465,7 +468,7 @@ public class BlockEventHandler {
    * @param fluidState Flowing fluid's state.
    * @return PASS if the fluid flow is allowed, else FAIL.
    */
-  public ActionResult onFluidFromTo(
+  private ActionResult onFluidFromTo(
       World world,
       BlockPos toBlockPos,
       BlockState toBlockState,
@@ -487,8 +490,20 @@ public class BlockEventHandler {
    * @param toBlockPos Position being dispensed/dropped to.
    * @return PASS if the dispense is allowed, else FAIL.
    */
-  public ActionResult onDispenseFromTo(World world, BlockPos fromBlockPos, BlockPos toBlockPos) {
+  private ActionResult onDispenseFromTo(World world, BlockPos fromBlockPos, BlockPos toBlockPos) {
     return onFromTo(world, fromBlockPos, toBlockPos);
+  }
+
+  /**
+   * Ensures hoppers cannot be used to insert items into a container across a claim boundary.
+   * Delegates to onFromTo.
+   *
+   * @param hopper Hopper trying to insert items.
+   * @param toBlockPos Position being inserted into.
+   * @return PASS if the insert is allowed, else FAIL.
+   */
+  private ActionResult onHopperInsert(HopperBlockEntity hopper, BlockPos toBlockPos) {
+    return onFromTo(hopper.getWorld(), hopper.getPos(), toBlockPos);
   }
 
   /**
@@ -499,7 +514,7 @@ public class BlockEventHandler {
    * @param toBlockPos Position in the world the event is "moving" to.
    * @return PASS if the movement is allowed, else FAIL.
    */
-  public ActionResult onFromTo(World world, BlockPos fromBlockPos, BlockPos toBlockPos) {
+  private ActionResult onFromTo(World world, BlockPos fromBlockPos, BlockPos toBlockPos) {
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
@@ -555,7 +570,7 @@ public class BlockEventHandler {
    * @param leavesPositions Set of coordinates for the tree leaves.
    * @return {@code PASS} always.
    */
-  public ActionResult onTreeGrow(
+  private ActionResult onTreeGrow(
       GrowthType growthType,
       TreeFeature feature,
       World world,
