@@ -22,9 +22,12 @@ package com.github.plateofpasta.chunkclaimfabric.config;
 
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
 import com.github.plateofpasta.chunkclaimfabric.util.TagBuilderHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
@@ -163,5 +166,10 @@ public class ChunkClaimTags {
       (new TagBuilderHelper<>(
               ChunkClaimFabric.MOD_ID + "-checked-thrown-entities", Registry.ENTITY_TYPE))
           .add(EntityType.EXPERIENCE_BOTTLE, EntityType.POTION)
+          .build();
+  public static final Tag<Block> PROTECTED_SWITCHES =
+      (new TagBuilderHelper<>(ChunkClaimFabric.MOD_ID + "-protected-switches", Registry.BLOCK))
+          .add(BlockTags.BUTTONS)
+          .add(Blocks.LEVER)
           .build();
 }

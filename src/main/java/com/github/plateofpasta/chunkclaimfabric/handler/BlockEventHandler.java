@@ -22,6 +22,7 @@
 package com.github.plateofpasta.chunkclaimfabric.handler;
 
 import com.github.plateofpasta.chunkclaimfabric.ChunkClaimFabric;
+import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimConfig;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimPrompt;
 import com.github.plateofpasta.chunkclaimfabric.config.ChunkClaimTags;
 import com.github.plateofpasta.chunkclaimfabric.datastore.DataStore;
@@ -42,9 +43,12 @@ import com.github.plateofpasta.edgestitch.event.PistonEvents;
 import com.github.plateofpasta.edgestitch.world.EdgestitchLocation;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.block.AbstractChestBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
+import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.block.piston.PistonHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -287,78 +291,49 @@ public class BlockEventHandler {
   }
 
   /**
-   * Handler body for onBlockBreak and onBlockPlace.
+   * Helper for when a player tries to break a block in a non-claimed chunk - the chunk will be
+   * automatically claimed without the `/chunk claim` command if claim conditions are met.
    *
-   * @param player Player performing modification to the world.
-   * @param location Location of modification.
-   * @param shouldInvokeModify Boolean indicating if {@link Chunk#modify()} should be invoked.
-   * @return PASS if the action is allowed, else FAIL.
+   * @param player Player that is trying to (maybe) claim the chunk.
+   * @param location Location of the block being broken in a chunk.
+   * @param playerData Chunk claim player data.
    */
-  private ActionResult handleBlockModify(
-      final ChunkClaimPlayer player,
-      final EdgestitchLocation location,
-      boolean shouldInvokeModify) {
-    final PlayerData playerData = this.dataStore.getPlayerData(player.getName());
-    final Chunk chunk = dataStore.getChunkAt(location, playerData.getLastChunk());
+  private void tryClaim(
+      ChunkClaimPlayer player, EdgestitchLocation location, PlayerData playerData) {
+    // If no one has claimed the chunk, try to let the player claim it.
+    String playerName = player.getName();
 
-    if (playerData.canIgnoreChunkClaims()) {
-      return ActionResult.PASS;
+    if (!player.hasClaimChunkPermission()) {
+      player.sendMessage(ChunkClaimPrompt.get("prompt.chunkclaim.no_claim_permission"));
+      Visualization.apply(
+          player,
+          Visualization.fromChunk(
+              new Chunk(location), location.getY(), VisualizationType.ERROR_CHUNK, location));
+      return;
     }
 
-    if (chunk == null) {
-      // If no one has claimed the chunk, try to let the player claim it.
-      String playerName = player.getName();
+    if (!dataStore.ownsNear(location, playerName)) {
+      handleOwnsNearBlockModify(player, location);
+    } else if (playerData.canAffordClaim()) {
+      // Claim chunk and add it to the datastore.
+      Chunk newChunk = new Chunk(location, playerName, playerData.getBuilderNames());
+      this.dataStore.claimChunk(playerName, newChunk);
+      playerData.setLastChunk(newChunk);
 
-      if (!player.hasClaimChunkPermission()) {
-        player.sendMessage(ChunkClaimPrompt.get("prompt.chunkclaim.no_claim_permission"));
-        Visualization.apply(
-            player,
-            Visualization.fromChunk(
-                new Chunk(location), location.getY(), VisualizationType.ERROR_CHUNK, location));
-        return ActionResult.FAIL;
-      }
-
-      if (!dataStore.ownsNear(location, playerName)) {
-        handleOwnsNearBlockModify(player, location);
-      } else if (playerData.canAffordClaim()) {
-        // Claim chunk and add it to the datastore.
-        Chunk newChunk = new Chunk(location, playerName, playerData.getBuilderNames());
-        this.dataStore.claimChunk(playerName, newChunk);
-        playerData.setLastChunk(newChunk);
-
-        // Send success prompt and visualization to player.
-        player.sendMessage(ChunkClaimPrompt.justClaimedChunk(playerData.getCredits()));
-        Visualization.apply(
-            player,
-            Visualization.fromChunk(newChunk, location.getY(), VisualizationType.CHUNK, location));
-      } else {
-        player.sendMessage(ChunkClaimPrompt.get("prompt.chunkclaim.not_enough_credits_claim"));
-        if (playerData.getLastChunk() != null) {
-          playerData.setLastChunk(null);
-          Visualization.apply(
-              player,
-              Visualization.fromChunk(
-                  new Chunk(location), location.getY(), VisualizationType.PUBLIC, location));
-        }
-      }
-      // Always cancel the block break.
-      return ActionResult.FAIL;
-    } else if (chunk.canModify(player.getName())) {
-      if (shouldInvokeModify) {
-        chunk.modify();
-      }
-      return ActionResult.PASS;
+      // Send success prompt and visualization to player.
+      player.sendMessage(ChunkClaimPrompt.justClaimedChunk(playerData.getCredits()));
+      Visualization.apply(
+          player,
+          Visualization.fromChunk(newChunk, location.getY(), VisualizationType.CHUNK, location));
     } else {
-      player.sendMessage(ChunkClaimPrompt.noBuildPermissionFrom(chunk.getOwnerName()));
-
-      if (playerData.getLastChunk() != chunk) {
-        playerData.setLastChunk(chunk);
+      player.sendMessage(ChunkClaimPrompt.get("prompt.chunkclaim.not_enough_credits_claim"));
+      if (playerData.getLastChunk() != null) {
+        playerData.setLastChunk(null);
         Visualization.apply(
             player,
             Visualization.fromChunk(
-                chunk, location.getY(), VisualizationType.ERROR_CHUNK, location));
+                new Chunk(location), location.getY(), VisualizationType.PUBLIC, location));
       }
-      return ActionResult.FAIL;
     }
   }
 
@@ -379,8 +354,29 @@ public class BlockEventHandler {
     }
     final ChunkClaimPlayer player = new ChunkClaimPlayer(playerEntity);
     final EdgestitchLocation location = new EdgestitchLocation(world, blockPos);
+    final PlayerData playerData = this.dataStore.getPlayerData(player.getName());
+    final Chunk chunk = dataStore.getChunkAt(location, playerData.getLastChunk());
 
-    return handleBlockModify(player, location, false);
+    if (playerData.canIgnoreChunkClaims()) {
+      return ActionResult.PASS;
+    }
+
+    if (chunk == null) {
+      // Try claim, but the action should always cancel the block break.
+      tryClaim(player, location, playerData);
+    } else if (chunk.canModify(player.getName())) {
+      return ActionResult.PASS;
+    } else {
+      player.sendMessage(ChunkClaimPrompt.noBuildPermissionFrom(chunk.getOwnerName()));
+      if (playerData.getLastChunk() != chunk) {
+        playerData.setLastChunk(chunk);
+        Visualization.apply(
+            player,
+            Visualization.fromChunk(
+                chunk, location.getY(), VisualizationType.ERROR_CHUNK, location));
+      }
+    }
+    return ActionResult.FAIL;
   }
 
   /**
@@ -394,14 +390,60 @@ public class BlockEventHandler {
    */
   private ActionResult onBlockPlace(
       PlayerEntity playerEntity, World world, Hand hand, BlockHitResult hitResult) {
-
     if (!ChunkClaimUtil.isConfiguredWorld(world)) {
       return ActionResult.PASS;
     }
     final ChunkClaimPlayer player = new ChunkClaimPlayer(playerEntity);
     final EdgestitchLocation location = new EdgestitchLocation(world, hitResult.getBlockPos());
+    final PlayerData playerData = this.dataStore.getPlayerData(player.getName());
+    final Chunk chunk = dataStore.getChunkAt(location, playerData.getLastChunk());
 
-    return handleBlockModify(player, location, true);
+    if (playerData.canIgnoreChunkClaims()) {
+      return ActionResult.PASS;
+    }
+
+    // Interaction that will consume the player's action. For example, pressing buttons/levers or
+    // opening blocks with inventories.
+    boolean probablyConsumableInteraction =
+        !(playerEntity.shouldCancelInteraction()
+            && (!playerEntity.getMainHandStack().isEmpty()
+                || !playerEntity.getOffHandStack().isEmpty()));
+    if (chunk == null) {
+      return ActionResult.FAIL;
+    } else if (chunk.canModify(player.getName())) {
+      // We want the modify counter to increase when players place blocks, not when they right
+      // click blocks.
+      if (!probablyConsumableInteraction) {
+        chunk.modify();
+      }
+      return ActionResult.PASS;
+    } else {
+      if (probablyConsumableInteraction) {
+        ChunkClaimConfig config = ChunkClaimFabric.getClaimConfig();
+        if (!config.getProtectSwitches()) {
+          if (ChunkClaimTags.PROTECTED_SWITCHES.contains(location.getBlockState().getBlock())) {
+            return ActionResult.PASS;
+          }
+        }
+        if (!config.getProtectContainers()) {
+          BlockEntity blockEntity = location.getWorld().getBlockEntity(location.getBlockPos());
+          if (blockEntity != null
+              && (blockEntity instanceof LockableContainerBlockEntity
+                  || blockEntity.getCachedState().getBlock() instanceof AbstractChestBlock)) {
+            return ActionResult.PASS;
+          }
+        }
+      }
+      player.sendMessage(ChunkClaimPrompt.noBuildPermissionFrom(chunk.getOwnerName()));
+      if (playerData.getLastChunk() != chunk) {
+        playerData.setLastChunk(chunk);
+        Visualization.apply(
+            player,
+            Visualization.fromChunk(
+                chunk, location.getY(), VisualizationType.ERROR_CHUNK, location));
+      }
+      return ActionResult.FAIL;
+    }
   }
 
   /**
