@@ -79,7 +79,8 @@ public class ChunkClaimConfig implements ConfigData {
           "If true, players are not allowed to access containers unless they are trusted in "
               + "the claim that the container resides in.\n"
               + "Else if false, players are allowed to access any container in "
-              + "any chunk regardless of permissions.")
+              + "any chunk regardless of permissions.\n"
+              + "A container is any block with usable storage slots.")
   protected boolean protectContainers = true;
 
   @Comment(
@@ -112,7 +113,9 @@ public class ChunkClaimConfig implements ConfigData {
     return chunkPrice;
   }
 
-  /** @return {@code true} if containers are protected, else false. */
+  /**
+   * @return {@code true} if containers (any block usable storage slots) are protected, else false.
+   */
   public boolean getProtectContainers() {
     return protectContainers;
   }
